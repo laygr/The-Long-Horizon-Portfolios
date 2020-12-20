@@ -39,6 +39,10 @@ def limpiar(metadatos_df, quitados_manualmente_df, sin_repetidos_df):
     filtered_df = sin_repetidos_df[combinado_df['TICKER']]
     return filtered_df, eliminated_df
 
+
+
+
+##### Para correrlo desde la línea de comandos #####
 import argparse
 def main(metadatos, quitados_manualmente, sin_repetidos, output_csv_name, output_eliminated_csv_name):
     metadatos_df = pd.read_excel(metadatos)
