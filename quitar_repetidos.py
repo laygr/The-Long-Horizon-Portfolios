@@ -41,7 +41,7 @@ def main(filepath, minimum_repeated, output_csv_name):
     df = pd.read_excel(filepath, index_col=0)
     sin_repetidos_df, repetidos_info = delete_repeated_in_df(df, minimum_repeated)
     sin_repetidos_df.to_csv(output_csv_name + '.csv')
-    repetidos_info.to_csv(output_csv_name + ' info.csv', index=False)
+    repetidos_info.to_csv(output_csv_name + '_info.csv', index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Removes repeated values from excel file')
