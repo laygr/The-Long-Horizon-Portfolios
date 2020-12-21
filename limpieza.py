@@ -13,10 +13,11 @@ def limpiar(metadatos_df, quitados_manualmente_df, sin_repetidos_df):
                                                            & (metadatos_df['HB_GEOGRAPHIC_FOCUS'] != 'Mexico')
 
     # filtrar por metadatos
+    metadatos_df = filtros.quitar_si_condicion_y_columna_en_lista(metadatos_df, 'Coincide focus y region', 'FUND_GEO_FOCUS', ['european region', 'asian pacific region ex japan', 'asian pacific region', 'eurozone', 'Global'])
+    metadatos_df = filtros.quitar_si_condicion_y_columna_en_lista(metadatos_df, 'Coincide focus y country y no mexico', 'FUND_GEO_FOCUS', ['u.s.'])
+
     metadatos_df = filtros.quitar_si_columna_en_lista(metadatos_df, 'GEO_FOCUS_COUNTRY', ['brazil', 'spain', 'us'])
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'GEO_FOCUS_REGION', 'bric')
-    metadatos_df = filtros.quitar_si_condicion_y_columna_en_lista(metadatos_df, 'Coincide focus y region', 'FUND_GEO_FOCUS', ['european region', 'asian pacific region ex japan', 'asian pacific region', 'eurozone'])
-    metadatos_df = filtros.quitar_si_condicion_y_columna_en_lista(metadatos_df, 'Coincide focus y country y no mexico', 'FUND_GEO_FOCUS', ['u.s.'])
     metadatos_df = filtros.quitar_si_columna_en_lista(metadatos_df, 'HB_GEOGRAPHIC_FOCUS', ['u.s.', 'asia pacific', 'western europe'])
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'TICKER', 'fib')
     #Pendiente
@@ -28,15 +29,29 @@ def limpiar(metadatos_df, quitados_manualmente_df, sin_repetidos_df):
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'CIE_DES', 'morgan stanley capital internationl all country world index')
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'CIE_DES', 'commodities')
 
+
     # QUITAR FILTRADOS MANUALMENTE
     quitados_manualmente_df = quitados_manualmente_df[['TICKER', 'Dudoso']]
     combinado_df = metadatos_df.merge(quitados_manualmente_df, on='TICKER', how='left')
     combinado_df = combinado_df[~(combinado_df['Dudoso'] == False)]
-    tickers_sobrevivientes = set(combinado_df['TICKER'])
-    tickers_eliminados = tickers_originales - tickers_sobrevivientes
-    
-    eliminated_df = pd.DataFrame(tickers_eliminados, columns=['Eliminated'])
+
+    # CREAR SUBCONJUNTO DE SERIE DE PRECIOS
     filtered_df = sin_repetidos_df[combinado_df['TICKER']]
+
+    # QUITAR FONDOS QUE TRADEARON MENOS DE UN AÑO
+    mayores_a_un_anio = (filtered_df.count(axis=0) > 240)
+    tickers_con_mas_de_un_anio = mayores_a_un_anio[mayores_a_un_anio].index
+    filtered_df = filtered_df[tickers_con_mas_de_un_anio]
+
+    tickers_sobrevivientes = set(filtered_df.columns)
+    tickers_eliminados = tickers_originales - tickers_sobrevivientes
+    eliminated_df = pd.DataFrame(tickers_eliminados, columns=['Eliminated'])
+
+    print('# de Tickers al principio: ', len(tickers_originales))
+    print('# de Tickers después de filtrar: ', len(tickers_sobrevivientes))
+    print('# de Tickers eliminados: ', len(tickers_eliminados))
+    
+    
     return filtered_df, eliminated_df
 
 
