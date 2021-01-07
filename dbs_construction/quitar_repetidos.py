@@ -10,13 +10,14 @@ def delete_repeated_in_series(s, minimum_required):
     repeated_indexed['Repeated'] = repeated_indexed['Repeated']
     repeated_indexed['Position'] = repeated_indexed['Position']
     repeated_indexed = repeated_indexed[repeated_indexed['Repeated'] >= minimum_required]
-    repeated_indexed['Date'] = s.index[repeated_indexed['Position']]
-    repeated_indexed = repeated_indexed.set_index('Date')
+    repeated_indexed['Dates'] = s.index[repeated_indexed['Position']]
+    repeated_indexed = repeated_indexed.set_index('Dates')
     shifted_positions = repeated_indexed['Position'] + 1
     repeated_indexed['Value'] = s.iloc[shifted_positions].values
     repeated_indexed = repeated_indexed.dropna(how='any')
     repeated_indexed = repeated_indexed.reset_index()
-    repeated_indexed = repeated_indexed[['Date', 'Value', 'Repeated', 'Position']]
+    if repeated_indexed.empty: return repeated_indexed
+    repeated_indexed = repeated_indexed[['Dates', 'Value', 'Repeated', 'Position']]
     
     for _, row in repeated_indexed.iterrows():
         start = int(row['Position'] + 1)
@@ -33,20 +34,5 @@ def delete_repeated_in_df(df, minimun_required):
         repeated['Ticker'] = columnName
         acum.append(repeated)
     acum = pd.concat(acum)
-    acum = acum[['Ticker', 'Date', 'Value', 'Repeated', 'Position']]
+    acum = acum[['Ticker', 'Dates', 'Value', 'Repeated', 'Position']]
     return df_copy, acum
-
-import argparse
-def main(filepath, minimum_repeated, output_csv_name):
-    df = pd.read_excel(filepath, index_col=0)
-    sin_repetidos_df, repetidos_info = delete_repeated_in_df(df, minimum_repeated)
-    sin_repetidos_df.to_csv(output_csv_name + '.csv')
-    repetidos_info.to_csv(output_csv_name + '_info.csv', index=False)
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Removes repeated values from excel file')
-    parser.add_argument('--filepath', help='the path to the excel file')
-    parser.add_argument('--minimum_repeated', type=int, help='path to schema')
-    parser.add_argument('--output_csv_name', help='name of the csv where the processed table will be saved')
-    args = parser.parse_args()
-    main(args.filepath, args.minimum_repeated, args.output_csv_name)

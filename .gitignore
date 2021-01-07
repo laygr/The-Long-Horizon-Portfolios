@@ -3,3 +3,7 @@
 *.DS_STORE
 *vscode
 *__pycache__
+notebooks/*
+tables/*
+**.eddx
+**.ipynb
