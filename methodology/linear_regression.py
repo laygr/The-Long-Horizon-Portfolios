@@ -6,7 +6,7 @@ import math
 def capm(security_series, market_series, rf_series):
     data = pd.concat([security_series, market_series, rf_series], axis=1, keys=['Xi', 'Xm', 'rf']).dropna(how='any')
     if len(data) < 3:
-        return [security_series.name] + [None] * 13 + [len(data)]
+        return [security_series.name] + [None] * 15 + [len(data)]
     data['Xi - rf'] = data['Xi'] - data['rf']
     data['Xm - rf'] = data['Xm'] - data['rf']
     X = data['Xm - rf'].values.reshape(-1, 1)
@@ -28,20 +28,22 @@ def capm(security_series, market_series, rf_series):
             math.sqrt(seb2),                 # se_b
             data['Xi'].mean(),               # miu_i
             data['Xm'].mean(),               # miu_m
-            data['Xm'].std(),                # sigma_m
             data['rf'].mean(),               # miu_rf
-            data['rf'].std(),                # sigma_rf
             data['Xi - rf'].mean(),          # miu_(i-rf)
             data['Xm - rf'].mean(),          # miu_(m-rf)
+            data['Xi'].std(),                # sigma_i
+            data['Xm'].std(),                # sigma_m
+            data['rf'].std(),                # sigma_rf
+            data['Xi - rf'].std(),           # sigma_(i-rf)
             data['Xm - rf'].std(),           # sigma_(m-rf)
             M                                # Number of datapoints
     ]
 
 def many_capm(funds, index, risk_free):
     columns = ['fund', 'R2', 'alpha', 'beta', 'se', 'se_b', \
-                'miu_i', 'miu_m', 'sigma_m', 'miu_rf', 'sigma_rf', \
-                'miu_(i-rf)', 'miu_(m-rf)', 'sigma_(m-rf)', \
-                'M']
+                 'miu_i',   'miu_m',   'miu_rf',   'miu_(i-rf)',   'miu_(m-rf)', \
+               'sigma_i', 'sigma_m', 'sigma_rf', 'sigma_(i-rf)', 'sigma_(m-rf)', \
+               'M']
     data = []
     for fund_name in funds.columns:
         data.append(capm(funds[fund_name], index, risk_free))

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import linear_regression
-from .long_horizon import compute_beta_L, compute_betas_L, \
+from long_horizon import compute_beta_L, compute_betas_L, \
                           compute_beta_LL, compute_alpha_L
 
 def simulate_one(data, betas_std, alphas_std):
@@ -44,24 +44,18 @@ def simulate_one(data, betas_std, alphas_std):
     return pd.Series(true_betas_L), pd.Series(betas_LS)
     
 def simulate_many(data, S=1000):
-    true_betas, betas_S, true_betas_L, betas_LS = [], [], [], []
+    true_betas_L, betas_LS = [], []
     betas_std  = data['beta'].std()
     alphas_std = data['alpha'].std()
     for i in range(S):
-        one_true_betas, one_betas_S, one_true_betas_L, one_betas_LS = \
-            simulate_one(data, betas_std, alphas_std)
+        one_true_betas_L, one_betas_LS = simulate_one(data, betas_std, alphas_std)
         print(i)
-        true_betas.append(one_true_betas)
-        betas_S.append(one_betas_S)
         true_betas_L.append(one_true_betas_L)
         betas_LS.append(one_betas_LS)
-        
-    true_betas = pd.concat(true_betas, axis=1)
-    betas_S = pd.concat(betas_S, axis=1)
     
     true_betas_L = pd.concat(true_betas_L, axis=1)
     betas_LS = pd.concat(betas_LS, axis=1)
-    return true_betas, betas_S, true_betas_L, betas_LS
+    return true_betas_L, betas_LS
 
 def estimate_relations_between_true_and_sample(true_betas_L, betas_LS):
     regression_data = []

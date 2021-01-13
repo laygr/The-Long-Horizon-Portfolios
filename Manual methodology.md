@@ -20,7 +20,7 @@ Return Horizon and Mutual Fund Performance In Mexico
 
 > python modified_LL.py ^
     --regression ../data/filtered_regressions_4_weeks_w_10_90.csv ^
-    --N 0 ^
+    --N 13 ^
     --S 1000
 
 
@@ -48,3 +48,10 @@ python combine_highly_correlated.py ^
     --regression ../data/filtered_regressions_combined.csv ^
     --N 13 ^
     --S 1000
+
+
+python first_regressions.py ^
+    --funds  ../data/funds_daily_returns_i.csv ^
+    --index  ../data/index_daily_returns_i.csv ^
+    --rf     ../data/rf_daily_returns_i.csv ^
+    --output ../data/regressions_daily_i

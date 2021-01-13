@@ -20,6 +20,11 @@ python extract_last_days_months.py ^
     --last_days_months  ../data/last_days_in_months.csv ^
     --output            ../data/risk_free
 
+python remove_repeated_prices.py ^
+    --prices          ../input_data/todas.xlsx ^
+    --minimum_repeated 4 ^
+    --output           ../data/todas
+
 > python build_funds_monthly_returns.py ^
     --precios          ../input_data/todas.xlsx ^
     --minimum_repeated 4 ^
@@ -64,3 +69,13 @@ python only_dates_in_common.py ^
     --index        ../data/index_4_weeks_returns.csv ^
     --rf           ../data/risk_free_4_weeks.csv ^
     --output_sufix 2
+
+
+
+python build_daily_returns.py ^
+    --funds ../data/todas.csv ^
+    --index ../input_data/Naftrac.xlsx ^
+    --rf    ../input_data/Cetes.xlsx ^
+    --funds_output ../data/funds_daily_returns ^
+    --index_output ../data/index_daily_returns ^
+    --rf_output    ../data/rf_daily_returns
