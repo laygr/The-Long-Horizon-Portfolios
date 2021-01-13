@@ -1,4 +1,15 @@
+Descripción
+Horizonte de los retornos: 4 semanas
+periodo: todo
+Combinadas las series altamente correlacionadas: No
+
 # Dbs construction
+
+python filter_tickers_by_metadata.py ^
+    --metadatos             ../input_data/metadatos.xlsx ^
+    --quitados_manualmente  ../input_data/eliminados_manualmente.xlsx ^
+    --output                ../data/filtered_by_metadata ^
+    --output_eliminated     ../data/eliminated_by_metadata
 
 python remove_repeated_prices.py ^
     --prices            ../input_data/todas.xlsx ^
@@ -10,11 +21,11 @@ python extract_days_every_n_weeks.py ^
     --n      4 ^
     --output ../data/days_every_4_weeks
 
-    python build_n_week_returns.py ^
+python build_n_week_returns.py ^
     --funds                ../data/todas.csv ^
     --index                ../input_data/Naftrac.xlsx ^
-    --n                    4 ^
     --rf                   ../input_data/Cetes.xlsx ^
+    --n                    4 ^
     --dates_every_n_week   ../data/days_every_4_weeks.csv ^
     --funds_output         ../data/funds_4_weeks_returns ^
     --index_output         ../data/index_4_weeks_returns ^
@@ -63,6 +74,13 @@ python modified_LL.py ^
 
 # tables
 
+python categorias_tickers.py ^
+    --filtered_by_metadata   ../data/filtered_by_metadata.csv ^
+    --funds                  ../data/todas.csv ^
+    --filtered_regs          ../data/filtered_regressions_4_weeks.csv ^
+    --rejected_regs          ../data/eliminated_regressions_4_weeks.csv ^
+    --output                 ../output/1/Categorias
+
 python table1.py ^
     --funds        ../data/funds_4_weeks_returns_2.csv ^
     --index        ../data/index_4_weeks_returns_2.csv ^
@@ -74,7 +92,8 @@ python table2.py ^
     --funds                 ../data/funds_4_weeks_returns_2.csv ^
     --index                 ../data/index_4_weeks_returns_2.csv ^
     --rf                    ../data/risk_free_4_weeks_returns_2.csv ^
-    --filtered_regressions  ../data/filtered_regressions_4_weeks.csv
+    --filtered_regressions  ../data/filtered_regressions_4_weeks.csv ^
+    --weeks                 4^
     --output                ../output/1/Table2.xlsx
 
 python table3.py ^

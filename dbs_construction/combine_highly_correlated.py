@@ -1,7 +1,23 @@
 import pandas as pd
 import numpy as np
 
+def dfs(current, explored, edges, acum, days_with_price, counts):
+    if current in explored: return
+    acum.add(current)
+    explored.add(current)
+    if not current in edges: return
+    for other in edges.loc[current].index:
+        if other in acum: continue
+        if funds_have_enough_common_days(current, other, days_with_price, counts, threshold=0.9):
+            #print('from', current, 'to', other)
+            dfs(other, explored, edges, acum, days_with_price, counts)
 
+def funds_have_enough_common_days(fund1, fund2, days_with_price, counts, threshold):
+    days_in_common = days_with_price[fund1].intersection(days_with_price[fund2])
+    number_of_days_in_common = len(days_in_common)
+    if number_of_days_in_common < 12: return False
+    common_percentage = max(number_of_days_in_common/counts[fund1], number_of_days_in_common/counts[fund2])
+    return common_percentage >= threshold
 
 def merge_series_in_group(funds, group):
     #print('before', funds[group['Fund']].count())

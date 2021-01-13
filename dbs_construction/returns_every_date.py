@@ -7,7 +7,6 @@ def main(prices, dates, h):
         chunk = prices.loc[start:end]
         chunk = chunk.dropna()
         days_with_price = len(chunk)
-        print(days_with_price)
         if days_with_price >= h * 0.8:
             returns[end] = chunk.iloc[-1] / chunk.iloc[0] - 1
             days[end] = days_with_price

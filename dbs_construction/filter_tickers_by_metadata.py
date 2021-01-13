@@ -71,8 +71,7 @@ import argparse
 def main(metadatos, quitados_manualmente, output_csv_name, output_eliminated_csv_name):
     metadatos_df = pd.read_excel(metadatos)
     quitados_manualmente_df = pd.read_excel(quitados_manualmente)
-    #sin_repetidos_df = pd.read_csv(sin_repetidos, index_col=0)
-    limpiados_df, eliminados_df = limpiar(metadatos_df, quitados_manualmente_df) #, sin_repetidos_df)
+    limpiados_df, eliminados_df = limpiar(metadatos_df, quitados_manualmente_df)
     limpiados_df.to_csv(output_csv_name + '.csv', index=False)
     eliminados_df.to_csv(output_eliminated_csv_name+'.csv', index=False)
 
@@ -80,7 +79,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Cleans the database')
     parser.add_argument('--metadatos', help='file with the metadata')
     parser.add_argument('--quitados_manualmente', help='file that contains the tickers eliminated manually')
-    #parser.add_argument('--sin_repetidos', help='file without repeated prices')
     parser.add_argument('--output', help='name of the csv where the processed table will be saved')
     parser.add_argument('--output_eliminated', help='name of the csv where the eliminated tickers will be saved')
     args = parser.parse_args()

@@ -1,3 +1,8 @@
+Descripción
+Horizonte de los retornos: 1 semanas
+periodo: todo
+Combinadas las series altamente correlacionadas: No
+
 # Dbs construction
 
 python remove_repeated_prices.py ^
@@ -63,7 +68,14 @@ python modified_LL.py ^
     --N           0 ^
     --S           1000
 
-# Methodology
+# Tables
+
+python categorias_tickers.py ^
+    --filtered_by_metadata   ../data/filtered_by_metadata.csv ^
+    --funds                  ../data/todas.csv ^
+    --filtered_regs          ../data/filtered_regressions_1_weeks.csv ^
+    --rejected_regs          ../data/eliminated_regressions_1_weeks.csv ^
+    --output                 ../output/3/Categorias
 
 python table1.py ^
     --funds        ../data/funds_1_weeks_returns_2.csv ^
@@ -76,7 +88,8 @@ python table2.py ^
     --funds                 ../data/funds_1_weeks_returns_2.csv ^
     --index                 ../data/index_1_weeks_returns_2.csv ^
     --rf                    ../data/risk_free_1_weeks_returns_2.csv ^
-    --filtered_regressions  ../data/filtered_regressions_1_weeks.csv
+    --filtered_regressions  ../data/filtered_regressions_1_weeks.csv ^
+    --weeks                 1 ^
     --output                ../output/3/Table2.xlsx
 
 python table3.py ^
