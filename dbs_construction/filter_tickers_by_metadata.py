@@ -1,13 +1,7 @@
 import tipos_filtros as filtros
 import pandas as pd
 
-def quitar_fondos_con_pocos_precios_unicos(df, threshold):
-    porcentaje_unicos = df.nunique() / df.count()
-    porcentaje_unicos = porcentaje_unicos.sort_values()
-    despues_df = porcentaje_unicos[porcentaje_unicos > threshold]
-    return df[despues_df.index]
-
-def limpiar(metadatos_df, quitados_manualmente_df):#, sin_repetidos_df):
+def limpiar(metadatos_df, quitados_manualmente_df):
     tickers_originales = set(metadatos_df['TICKER'])
 
     # APLICAR FILTROS A METADATOS
@@ -36,30 +30,13 @@ def limpiar(metadatos_df, quitados_manualmente_df):#, sin_repetidos_df):
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'CIE_DES', 'morgan stanley capital internationl all country world index', 'morgan stanley capital internationl all country world index en des', removed_acum)
     metadatos_df = filtros.quitar_si_columna_contiene(metadatos_df, 'CIE_DES', 'commodities', 'commodities en des', removed_acum)
 
-
-
-
     # QUITAR FILTRADOS MANUALMENTE
     metadatos_df = filtros.quitar_seleccionados_manualmente(metadatos_df, quitados_manualmente_df, removed_acum)
-
-    # CREAR SUBCONJUNTO DE SERIE DE PRECIOS
-    #filtered_df = sin_repetidos_df[metadatos_df.index]
-
-    # QUITAR FONDOS QUE TRADEARON MENOS DE UN AÑO
-    # mayores_a_un_anio = (filtered_df.count(axis=0) > 240)
-    # tickers_con_mas_de_un_anio = mayores_a_un_anio[mayores_a_un_anio].index
-    # filtered_df = filtered_df[tickers_con_mas_de_un_anio]
-
-    # QUITAR FONDOS CON POCOS VALORES ÚNICOS
-    #filtered_df = quitar_fondos_con_pocos_precios_unicos(filtered_df, threshold=0.91)
-
-    # CREAR DATAFRAME CON TICKERS ELIMINADOS Y SU RAZÓN
     eliminated_df = pd.DataFrame(removed_acum, columns=['Ticker', 'Reason'])
 
     print('# de Tickers al principio: ', len(tickers_originales))
     print('# de Tickers después de filtrar: ', len(metadatos_df))
     print('# de Tickers eliminados: ', len(eliminated_df))
-    
     
     return metadatos_df, eliminated_df
 

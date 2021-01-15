@@ -7,3 +7,5 @@ notebooks/*
 tables/*
 **.eddx
 **.ipynb
+**.docx
+**/output

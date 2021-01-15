@@ -54,21 +54,21 @@ python filter_regressions.py ^
 
 python winsorize.py ^
     --regressions ../data_1/filtered_regressions_4_weeks.csv ^
-    --lower 10 ^
-    --upper 90
+    --lower 5 ^
+    --upper 95
 
 python modified_LL.py ^
-    --regressions "../data_1/filtered_regressions_4_weeks_w_10_90.csv" ^
+    --regressions "../data_1/filtered_regressions_4_weeks_w_5_95.csv" ^
     --N 13 ^
     --S 1000
 
 python modified_LL.py ^
-    --regressions "../data_1/filtered_regressions_4_weeks_w_10_90.csv" ^
+    --regressions "../data_1/filtered_regressions_4_weeks_w_5_95.csv" ^
     --N 130 ^
     --S 1000
 
 python modified_LL.py ^
-    --regressions "../data_1/filtered_regressions_4_weeks_w_10_90.csv" ^
+    --regressions "../data_1/filtered_regressions_4_weeks_w_5_95.csv" ^
     --N 0 ^
     --S 1000
 
@@ -97,19 +97,19 @@ python table2.py ^
     --output                ../output/1/Table2.xlsx
 
 python table3.py ^
-    --regs_year         "../data_1/filtered_regressions_4_weeks_w_10_90_13.csv" ^
-    --regs_decade       "../data_1/filtered_regressions_4_weeks_w_10_90_130.csv" ^
-    --regs_lifetime     "../data_1/filtered_regressions_4_weeks_w_10_90_0.csv" ^
+    --regs_year         "../data_1/filtered_regressions_4_weeks_w_5_95_13.csv" ^
+    --regs_decade       "../data_1/filtered_regressions_4_weeks_w_5_95_130.csv" ^
+    --regs_lifetime     "../data_1/filtered_regressions_4_weeks_w_5_95_0.csv" ^
     --output            ../output/1/Table3.xlsx
 
 python table3.py ^
-    --regs_year         "../data_1/filtered_regressions_4_weeks_w_10_90_13.csv" ^
-    --regs_decade       "../data_1/filtered_regressions_4_weeks_w_10_90_130.csv" ^
-    --regs_lifetime     "../data_1/filtered_regressions_4_weeks_w_10_90_0.csv" ^
+    --regs_year         "../data_1/filtered_regressions_4_weeks_w_5_95_13.csv" ^
+    --regs_decade       "../data_1/filtered_regressions_4_weeks_w_5_95_130.csv" ^
+    --regs_lifetime     "../data_1/filtered_regressions_4_weeks_w_5_95_0.csv" ^
     --output            ../output/1/Table3.xlsx
 
 python table4.py ^
-    --regs_year ../data_1/filtered_regressions_4_weeks_w_10_90_13.csv ^
+    --regs_year ../data_1/filtered_regressions_4_weeks_w_5_95_13.csv ^
     --h         13 ^
     --funds     ../data_1/funds_4_weeks_returns_2.csv ^
     --rf        ../data_1/risk_free_4_weeks_returns_2.csv ^
@@ -117,38 +117,38 @@ python table4.py ^
     --output    ../output/1/Table4.xlsx
 
 python table5.py ^
-    --data           ../data_1/filtered_regressions_4_weeks_w_10_90.csv ^
-    --data_year      ../data_1/filtered_regressions_4_weeks_w_10_90_13.csv ^
-    --data_decade    ../data_1/filtered_regressions_4_weeks_w_10_90_130.csv ^
-    --data_lifetime  ../data_1/filtered_regressions_4_weeks_w_10_90_0.csv ^
+    --data           ../data_1/filtered_regressions_4_weeks_w_5_95.csv ^
+    --data_year      ../data_1/filtered_regressions_4_weeks_w_5_95_13.csv ^
+    --data_decade    ../data_1/filtered_regressions_4_weeks_w_5_95_130.csv ^
+    --data_lifetime  ../data_1/filtered_regressions_4_weeks_w_5_95_0.csv ^
     --output         ../output/1/Table5.xlsx
 
 python table5.py ^
-    --data           "../data_1/filtered_regressions_4_weeks_w_10_90.csv" ^
-    --data_year      "../data_1/filtered_regressions_4_weeks_w_10_90_13.csv" ^
-    --data_decade    "../data_1/filtered_regressions_4_weeks_w_10_90_130.csv" ^
-    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_10_90_0.csv" ^
+    --data           "../data_1/filtered_regressions_4_weeks_w_5_95.csv" ^
+    --data_year      "../data_1/filtered_regressions_4_weeks_w_5_95_13.csv" ^
+    --data_decade    "../data_1/filtered_regressions_4_weeks_w_5_95_130.csv" ^
+    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_5_95_0.csv" ^
     --output         ../output/1/Table5.xlsx
 
 python table6.py ^
-    --data_year      "../data_1/filtered_regressions_4_weeks_w_10_90_13.csv" ^
-    --data_decade    "../data_1/filtered_regressions_4_weeks_w_10_90_130.csv" ^
-    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_10_90_0.csv" ^
+    --data_year      "../data_1/filtered_regressions_4_weeks_w_5_95_13.csv" ^
+    --data_decade    "../data_1/filtered_regressions_4_weeks_w_5_95_130.csv" ^
+    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_5_95_0.csv" ^
     --weeks          4 ^
     --output         ../output/1/Table6.xlsx
 
 python table7I.py ^
-    --data           "../data_1/filtered_regressions_4_weeks_w_10_90.csv" ^
-    --data_year      "../data_1/filtered_regressions_4_weeks_w_10_90_13.csv" ^
-    --data_decade    "../data_1/filtered_regressions_4_weeks_w_10_90_130.csv" ^
-    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_10_90_0.csv" ^
+    --data           "../data_1/filtered_regressions_4_weeks_w_5_95.csv" ^
+    --data_year      "../data_1/filtered_regressions_4_weeks_w_5_95_13.csv" ^
+    --data_decade    "../data_1/filtered_regressions_4_weeks_w_5_95_130.csv" ^
+    --data_lifetime  "../data_1/filtered_regressions_4_weeks_w_5_95_0.csv" ^
     --weeks          4 ^
     --output         ../output/1/Table7_I.xlsx
 
 python table7II.py ^
-    --data           ../data_1/filtered_regressions_4_weeks_w_10_90.csv ^
-    --data_year      ../data_1/filtered_regressions_4_weeks_w_10_90_13.csv ^
-    --data_decade    ../data_1/filtered_regressions_4_weeks_w_10_90_130.csv ^
-    --data_lifetime  ../data_1/filtered_regressions_4_weeks_w_10_90_0.csv ^
+    --data           ../data_1/filtered_regressions_4_weeks_w_5_95.csv ^
+    --data_year      ../data_1/filtered_regressions_4_weeks_w_5_95_13.csv ^
+    --data_decade    ../data_1/filtered_regressions_4_weeks_w_5_95_130.csv ^
+    --data_lifetime  ../data_1/filtered_regressions_4_weeks_w_5_95_0.csv ^
     --weeks          4 ^
     --output         ../output/1/Table7_II.xlsx

@@ -43,7 +43,7 @@ python first_regressions.py ^
 
 python filter_regressions.py ^
     --regressions          ../data/regressions_1_weeks.csv ^
-    --minimum              48 ^
+    --minimum              52 ^
     --filtered_by_metadata ../data/filtered_by_metadata.csv ^
     --filtered_output      ../data/filtered_regressions_1_weeks ^
     --eliminated_output    ../data/eliminated_regressions_1_weeks
@@ -52,6 +52,11 @@ python winsorize.py ^
     --regressions ../data/filtered_regressions_1_weeks.csv ^
     --lower 10 ^
     --upper 90
+
+python modified_LL.py ^
+    --regressions ../data/filtered_regressions_1_weeks_w_10_90.csv ^
+    --N           24 ^
+    --S           1000
 
 python modified_LL.py ^
     --regressions ../data/filtered_regressions_1_weeks_w_10_90.csv ^

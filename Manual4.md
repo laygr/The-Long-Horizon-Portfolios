@@ -44,7 +44,7 @@ python first_regressions.py ^
 
 python filter_regressions.py ^
     --regressions          ../data/regressions_1_weeks.csv ^
-    --minimum              48 ^
+    --minimum              52 ^
     --filtered_by_metadata ../data/filtered_by_metadata.csv ^
     --filtered_output      ../data/filtered_regressions_1_weeks ^
     --eliminated_output    ../data/eliminated_regressions_1_weeks

@@ -6,12 +6,12 @@ def main(regressions, filtered_by_metadata, minimum):
     filtered_regressions = regressions.loc[filtered_by_metadata.index]
     print('Después de aplicar filtros por metadatos:', len(filtered_regressions))
     filtered_regressions = filtered_regressions[filtered_regressions['M'] >= minimum]
-    print('Después de eliminar fondos con menos de 11 retornos mensuales:', len(filtered_regressions))
+    print('Después de eliminar fondos con menos de 1 año de retornos:', len(filtered_regressions))
 
     eliminated_regressions = regressions.loc[regressions.index.difference(filtered_by_metadata.index)]
     print('Número de regresiones rechazadas por los metadatos:', len(eliminated_regressions))
     eliminated_regressions = eliminated_regressions[eliminated_regressions['M'] >= minimum]
-    print('Después de eliminar fondos con menos de 11 retornos mensuales:', len(eliminated_regressions))
+    print('Después de eliminar fondos con menos de 1 año de retornos:', len(eliminated_regressions))
 
     return filtered_regressions, eliminated_regressions
 
